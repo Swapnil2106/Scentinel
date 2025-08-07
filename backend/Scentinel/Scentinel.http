@@ -1,0 +1,6 @@
+@Scentinel_HostAddress = http://localhost:5091
+
+GET {{Scentinel_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
