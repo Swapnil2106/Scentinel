@@ -7,16 +7,16 @@ namespace Scentinel.Services
 {
     public class ProductService: IProductService
     {
-        private readonly AppDbContext dbcontext;
+        private readonly AppDbContext dbContext;
 
         public ProductService(AppDbContext _dbcontext)
         {
-            dbcontext = _dbcontext;
+            dbContext = _dbcontext;
         }
 
         public async Task<List<ProductDTO>> GetAllProducts()
         {
-            var products = await dbcontext.Products
+            var products = await dbContext.Products
                            .Select(p => new ProductDTO
                            {
                                ProductId = p.ProductId,
@@ -33,7 +33,7 @@ namespace Scentinel.Services
 
         public async Task<ProductDTO> GetProductById(int id)
         {
-            var product = await dbcontext.Products
+            var product = await dbContext.Products
                             .Where(p => p.ProductId == id)
                             .Select(p => new ProductDTO
                             {
