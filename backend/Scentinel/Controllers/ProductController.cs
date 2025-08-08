@@ -1,5 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Scentinel.Data;
+using Scentinel.DTOs;
+using Scentinel.IServices;
 
 namespace Scentinel.Controllers
 {
@@ -7,18 +10,25 @@ namespace Scentinel.Controllers
     [ApiController]
     public class ProductController : ControllerBase
     {
-        private readonly AppDbContext _context;
+        private readonly IProductService productService;
 
-        public ProductController(AppDbContext context)
+        public ProductController(IProductService _productService)
         {
-            _context = context;
+            productService = _productService;
         }
 
         [HttpGet]
-        public IActionResult GetAllProducts()
+        public async Task<IActionResult> GetAllProducts()
         {
-            var products = _context.Products.ToList();
+            var products = await productService.GetAllProducts();
             return Ok(products);
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetProductById(int id)
+        {
+            var product = await productService.GetProductById(id);
+            return Ok(product);
         }
     }
 }
